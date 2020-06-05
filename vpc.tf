@@ -17,11 +17,11 @@ locals {
 }
 
 resource ibm_is_vpc "vpc" {
-  name = "${local.BASENAME}-vpc"
+  name = "schematics-andres-huerta-vpc"
 }
 
 resource ibm_is_security_group "sg1" {
-  name = "${local.BASENAME}-sg1"
+  name = "schematics-andres-huerta-sg1"
   vpc  = ibm_is_vpc.vpc.id
 }
 
@@ -38,9 +38,9 @@ resource "ibm_is_security_group_rule" "ingress_ssh_all" {
 }
 
 resource ibm_is_subnet "subnet1" {
-  name = "${local.BASENAME}-subnet1"
+  name = "schematics-andres-huerta-subnet1"
   vpc  = ibm_is_vpc.vpc.id
-  zone = "${local.ZONE}"
+  zone = "us-south-1"
   total_ipv4_address_count = 256
 }
 
@@ -57,10 +57,10 @@ data ibm_resource_group "group" {
 }
 
 resource ibm_is_instance "vsi1" {
-  name    = "${local.BASENAME}-vsi1"
+  name    = "schematics-andres-huerta-vsi1"
   resource_group = "${data.ibm_resource_group.group.id}"
   vpc     = ibm_is_vpc.vpc.id
-  zone    = "${local.ZONE}"
+  zone    = "us-south-1"
   keys    = [data.ibm_is_ssh_key.ssh_key_id.id]
   image   = data.ibm_is_image.ubuntu.id
   profile = "cc1-2x4"
@@ -72,7 +72,7 @@ resource ibm_is_instance "vsi1" {
 }
 
 resource ibm_is_floating_ip "fip1" {
-  name   = "${local.BASENAME}-fip1"
+  name   = "schematics-andres-huerta-fip1"
   target = ibm_is_instance.vsi1.primary_network_interface.0.id
 }
 
