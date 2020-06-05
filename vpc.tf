@@ -11,8 +11,8 @@ provider "ibm" {
   region = "us-south"
 }
 
-local {
-  BASENAME = "schematics" 
+locals {
+  BASENAME = "schematics-andres-huerta" 
   ZONE     = "us-south-1"
 }
 
